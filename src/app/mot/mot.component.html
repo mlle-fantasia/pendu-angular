@@ -2,6 +2,9 @@
   {{ mot }}
 </p>
 <p>
-  {{ this.motService.motCache }}
+  {{ motCache }}
+
+
 </p>
 
+<div *ngIf="message" class="alert alert-success">{{message.text}}</div>

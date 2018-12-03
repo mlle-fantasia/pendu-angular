@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {lettreService} from './lettre.service';
+import { Observable, Subject, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -8,24 +8,23 @@ import {lettreService} from './lettre.service';
 export class motService {
 
   DICTIONNAIRE = ['anticonstitutionnelement', 'bonjour', 'cannes', 'Dormir', 'Effacer', 'Front', 'Grossir', 'Hache', 'Ivoir', 'Jardinier', 'Kayak', 'Lignage', 'Maman', 'Naviguer', 'Oppération', 'Pouvoir', 'Questions', 'Route', 'Scintillement', 'Tortues', 'Unité', 'Vivre', 'Waaaaaaouuu', 'Xd', 'Yaourt', 'Zincographie'];
-  mot = '';
-  motCache = '';
+  ALPHABET = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+  tabLettreDejaCliquees = [];
+  nbEssaiMax = 8 ;
 
-
-  constructor(private lettreService: lettreService) {}
-
+  constructor() {}
 
   selectionMot() {
-    let mot;
-    mot =  this.DICTIONNAIRE[Math.floor(this.DICTIONNAIRE.length * Math.random())];
-    mot = this.majusculeMot(mot);
-    mot = this.removeAccents(mot);
+    let mot =  this.DICTIONNAIRE[Math.floor(this.DICTIONNAIRE.length * Math.random())];
+    mot = this.formatMot(mot);
     console.log(mot);
-    this.mot = mot;
+    return mot;
   }
 
-  majusculeMot(mot) {
-    return mot.toUpperCase();
+  formatMot(mot) {
+    return this
+      .removeAccents(mot)
+      .toUpperCase();
   }
 
   removeAccents(str) {
@@ -43,16 +42,23 @@ export class motService {
     return str.join('');
   }
 
-  testerLeMot(mot) {
+  rendreLeMot(mot) {
     console.log(mot);
-    this.motCache = '';
-    console.log(this.motCache);
-    for (let lettre of mot) {
-      this.motCache = this.motCache.concat('', this.lettreService.tabLettreDejaCliquees.includes(lettre) ? lettre : ' __ ');
+    let motCache = '';
+    for (const lettre of mot) {
+    motCache = motCache.concat('', this.tabLettreDejaCliquees.includes(lettre) ? lettre : ' __ ');
     }
-    console.log(this.lettreService.tabLettreDejaCliquees);
-    console.log(this.motCache);
-    return this.motCache;
+    console.log(this.tabLettreDejaCliquees);
+    console.log(motCache);
+    return motCache;
   }
 
+  ajouterAuTabDeLettreDejaCliquees(i: number) {
+    this.tabLettreDejaCliquees.push(this.ALPHABET[i]);
+    console.log(this.tabLettreDejaCliquees);
+  }
+
+  modifierNombreEssai() {
+    this.nbEssaiMax--;
+  }
 }

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import { lettreService } from './services/lettre.service';
+import {motService} from './services/mot.service';
+
 
 @Component({
   selector: 'app-root',
@@ -11,12 +12,12 @@ export class AppComponent implements OnInit{
 
   ALPHABET: any[];
 
-  constructor(private lettreService: lettreService){
+  constructor(private motService: motService){
 
   }
 
-  ngOnInit(){
-    this.ALPHABET = this.lettreService.ALPHABET;
+  ngOnInit() {
+    this.ALPHABET = this.motService.ALPHABET;
   }
 
 }
