@@ -1,0 +1,11 @@
+.header{
+  text-align: center;
+  background-color: red;
+  padding: 30px;
+  color: white;
+}
+.lettres{
+  text-align: center;
+  padding: 40px;
+  background-color: darkred;
+}
