@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {lettreService} from '../services/lettre.service';
+import {motService} from '../services/mot.service';
 
 @Component({
   selector: 'app-lettre',
@@ -13,20 +14,21 @@ export class LettreComponent implements OnInit {
 
 
 
-  constructor(private lettreService: lettreService) { }
+  constructor(private lettreService: lettreService, private motService: motService) { }
 
   ngOnInit() {
   }
 
   testerLettre(){
     this.lettreService.ajouterAuTabDeLettreDejaCliquees(this.index);
+    this.motService.testerLeMot(this.motService.mot);
   }
 
-  getColor(){
+  getColor() {
     console.log(this.lettreService.tabLettreDejaCliquees.indexOf(this.lettre));
-    if(this.lettreService.tabLettreDejaCliquees.indexOf(this.lettre) === -1){
+    if (this.lettreService.tabLettreDejaCliquees.indexOf(this.lettre) === -1) {
       return 'white';
-    }else {
+    } else {
       return 'gray';
     }
   }
