@@ -1,16 +1,19 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div class="header">
+<div class="center header">
   <h1>
     Welcome to {{ title }}
   </h1>
 </div>
-<div class="motCache">
+<div class="center motCache">
  <app-mot></app-mot>
 </div>
-<div class="lettres">
+<div class="center lettres">
   <app-lettre *ngFor = "let lettre of ALPHABET; let i = index"
               [lettre] = "lettre"
               [index] = "i"></app-lettre>
+</div>
+<div class="center nbEssai">
+  <app-essai></app-essai>
 </div>
 
 
