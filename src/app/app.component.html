@@ -4,6 +4,9 @@
     Welcome to {{ title }}
   </h1>
 </div>
+<div class="motCache">
+ <app-mot></app-mot>
+</div>
 <div class="lettres">
   <app-lettre *ngFor = "let lettre of ALPHABET; let i = index"
               [lettre] = "lettre"
