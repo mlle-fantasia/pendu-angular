@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit
+} from '@angular/core';
 
 @Component({
   selector: 'app-lettre-view',
@@ -6,6 +10,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./lettre-view.component.css']
 })
 export class LettreViewComponent implements OnInit {
+
+  @Input() alphabet: any[];
+  @Input() partieFini: boolean;
 
   constructor() { }
 

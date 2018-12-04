@@ -5,13 +5,11 @@
   </h1>
 </div>
 <div class="center motCache">
- <app-mot></app-mot>
+ <app-mot [mot]=mot [motCache]="motCache"></app-mot>
 </div>
 <div class="center lettres">
-  <app-lettre *ngFor = "let lettre of ALPHABET; let i = index"
-              [lettre] = "lettre"
-              [index] = "i">
-  </app-lettre>
+  <app-lettre-view [alphabet]="ALPHABET" [partieFini]="aGagne"></app-lettre-view>
+
 </div>
 <div class="center nbEssai">
   <app-essai></app-essai>

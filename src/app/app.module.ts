@@ -6,6 +6,7 @@ import { LettreViewComponent } from './lettre-view/lettre-view.component';
 import { MotComponent } from './mot/mot.component';
 import { motService } from './services/mot.service';
 import { EssaiComponent } from './essai/essai.component';
+import { DemmarerComponent } from './demmarer/demmarer.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { EssaiComponent } from './essai/essai.component';
     LettreComponent,
     LettreViewComponent,
     MotComponent,
-    EssaiComponent
+    EssaiComponent,
+    DemmarerComponent
   ],
   imports: [
     BrowserModule

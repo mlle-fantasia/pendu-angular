@@ -23,7 +23,6 @@ export class LettreComponent implements OnInit {
   }
 
   getColor() {
-    console.log(this.motService.tabLettreDejaCliquees.indexOf(this.lettre));
     if (this.motService.tabLettreDejaCliquees.indexOf(this.lettre) === -1) {
       return 'white';
     } else {

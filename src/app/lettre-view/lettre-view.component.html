@@ -1,3 +1,10 @@
-<app-lettre *ngFor = "let lettre of ALPHABET; let i = index"
-            [lettre] = "lettre"
-            [index] = "i"></app-lettre>
+<div *ngIf="!partieFini">
+  <app-lettre *ngFor = "let lettre of alphabet; let i = index"
+              [lettre] = "lettre"
+              [index] = "i">
+  </app-lettre>
+</div>
+<div *ngIf="partieFini">
+  <app-demmarer></app-demmarer>
+</div>
+

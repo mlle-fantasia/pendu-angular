@@ -1,4 +1,7 @@
-import { Injectable } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Injectable
+} from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
 
 @Injectable({
@@ -11,6 +14,7 @@ export class motService {
   ALPHABET = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
   tabLettreDejaCliquees = [];
   nbEssaiMax = 8 ;
+  aGagne = false;
 
   constructor() {}
 
@@ -61,4 +65,5 @@ export class motService {
   modifierNombreEssai() {
     this.nbEssaiMax--;
   }
+
 }
