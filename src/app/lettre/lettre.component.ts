@@ -17,7 +17,7 @@ export class LettreComponent implements OnInit {
 
   ngOnInit() {
   }
-  sendMessage(): void {
+  sendLettre(): void {
     // send message to subscribers via observable subject
     this.messageService.sendMessage(JSON.stringify({'lettre': this.lettre, 'index': this.index}));
   }

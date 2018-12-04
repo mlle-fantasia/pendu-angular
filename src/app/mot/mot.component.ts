@@ -22,6 +22,7 @@ export class MotComponent implements OnInit, OnDestroy {
       console.log(reponse.index);
       this.motService.ajouterAuTabDeLettreDejaCliquees(reponse.index);
       this.testerLaLettre();
+      this.finDePartieAffichageGagneOuPerdu();
     });
   }
 
@@ -43,7 +44,15 @@ export class MotComponent implements OnInit, OnDestroy {
     if (this.motCache === motCacheActuel) {
       this.motService.modifierNombreEssai();
     }
+  }
 
+  finDePartieAffichageGagneOuPerdu() {
+    if (this.motCache === this.mot) {
+      console.log('gagné !!!');
+      this.motCache = 'GAGNE !!!';
+    } else if (this.motService.nbEssaiMax === 0) {
+      this.motCache = 'PERDU !!!';
+    }
   }
 
   ngOnDestroy() {

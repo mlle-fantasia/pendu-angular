@@ -6,7 +6,7 @@ import { LettreViewComponent } from './lettre-view/lettre-view.component';
 import { MotComponent } from './mot/mot.component';
 import { motService } from './services/mot.service';
 import { EssaiComponent } from './essai/essai.component';
-import { essaiService } from './services/essai.service';
+
 
 @NgModule({
   declarations: [
@@ -20,8 +20,7 @@ import { essaiService } from './services/essai.service';
     BrowserModule
   ],
   providers: [
-    motService,
-    essaiService
+    motService
   ],
   bootstrap: [AppComponent]
 })
