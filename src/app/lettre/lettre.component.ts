@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {motService} from '../services/mot.service';
+import {MotService} from '../services/mot.service';
 import {MessageService} from '../services/message.service';
 
 @Component({
@@ -10,10 +10,16 @@ import {MessageService} from '../services/message.service';
 
 export class LettreComponent implements OnInit {
 
+  tableauDeLettreDejaCliqueeLettreConposant: any;
   @Input() lettre: string;
   @Input() index: number;
 
-  constructor(private motService: motService, private messageService: MessageService) { }
+  constructor(private motService: MotService, private messageService: MessageService) {
+    this.messageService.messageSource.subscribe((tableauRecu) => {
+      this.tableauDeLettreDejaCliqueeLettreConposant = tableauRecu;
+    });
+
+  }
 
   ngOnInit() {
   }
@@ -23,7 +29,7 @@ export class LettreComponent implements OnInit {
   }
 
   getColor() {
-    if (this.motService.tabLettreDejaCliquees.indexOf(this.lettre) === -1) {
+    if (this.tableauDeLettreDejaCliqueeLettreConposant.indexOf(this.lettre) === -1) {
       return 'white';
     } else {
       return 'gray';

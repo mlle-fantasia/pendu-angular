@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { LettreComponent } from './lettre/lettre.component';
 import { LettreViewComponent } from './lettre-view/lettre-view.component';
 import { MotComponent } from './mot/mot.component';
-import { motService } from './services/mot.service';
+import { MotService } from './services/mot.service';
 import { EssaiComponent } from './essai/essai.component';
 import { DemmarerComponent } from './demmarer/demmarer.component';
 
@@ -22,7 +22,7 @@ import { DemmarerComponent } from './demmarer/demmarer.component';
     BrowserModule
   ],
   providers: [
-    motService
+    MotService
   ],
   bootstrap: [AppComponent]
 })

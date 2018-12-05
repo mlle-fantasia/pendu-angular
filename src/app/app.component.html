@@ -1,16 +1,18 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="center header">
   <h1>
-    Welcome to {{ title }}
+   {{ title }}
   </h1>
 </div>
-<div class="center motCache">
- <app-mot [mot]=mot [motCache]="motCache"></app-mot>
-</div>
-<div class="center lettres">
-  <app-lettre-view [alphabet]="ALPHABET" [partieFini]="aGagne"></app-lettre-view>
 
+<div class="center motCache">
+ <app-mot [partieFinie]="partieFinie"></app-mot>
 </div>
+
+<div class="center lettres">
+  <app-lettre-view [partieFinie]="partieFinie"></app-lettre-view>
+</div>
+
 <div class="center nbEssai">
   <app-essai></app-essai>
 </div>

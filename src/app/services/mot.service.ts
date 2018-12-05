@@ -1,25 +1,18 @@
-import {
-  ChangeDetectorRef,
-  Injectable
-} from '@angular/core';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Injectable } from '@angular/core';
+import {MessageService} from './message.service';
 
 @Injectable({
   providedIn: 'root',
 })
 
-export class motService {
+export class MotService {
 
-  DICTIONNAIRE = ['anticonstitutionnelement', 'bonjour', 'cannes', 'Dormir', 'Effacer', 'Front', 'Grossir', 'Hache', 'Ivoir', 'Jardinier', 'Kayak', 'Lignage', 'Maman', 'Naviguer', 'Oppération', 'Pouvoir', 'Questions', 'Route', 'Scintillement', 'Tortues', 'Unité', 'Vivre', 'Waaaaaaouuu', 'Xd', 'Yaourt', 'Zincographie'];
-  ALPHABET = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-  tabLettreDejaCliquees = [];
   nbEssaiMax = 8 ;
-  aGagne = false;
 
-  constructor() {}
+  constructor(private messageService: MessageService) {}
 
-  selectionMot() {
-    let mot =  this.DICTIONNAIRE[Math.floor(this.DICTIONNAIRE.length * Math.random())];
+  selectionMot(dico) {
+    let mot =  dico[Math.floor(dico.length * Math.random())];
     mot = this.formatMot(mot);
     console.log(mot);
     return mot;
@@ -46,24 +39,39 @@ export class motService {
     return str.join('');
   }
 
-  rendreLeMot(mot) {
-    console.log(mot);
+  rendreLeMot(mot, tableauDeLettre) {
     let motCache = '';
     for (const lettre of mot) {
-    motCache = motCache.concat('', this.tabLettreDejaCliquees.includes(lettre) ? lettre : ' __ ');
+    motCache = motCache.concat('', tableauDeLettre.includes(lettre) ? lettre : ' __ ');
     }
-    console.log(this.tabLettreDejaCliquees);
+    console.log(tableauDeLettre);
     console.log(motCache);
     return motCache;
   }
 
-  ajouterAuTabDeLettreDejaCliquees(i: number) {
-    this.tabLettreDejaCliquees.push(this.ALPHABET[i]);
-    console.log(this.tabLettreDejaCliquees);
+  ajouterAuTabDeLettreDejaCliquees(lettre, tableauDeLettre) {
+    tableauDeLettre.push(lettre);
+    console.log(tableauDeLettre);
+    this.envoieDuTableauDeLettreDejaCliquee(tableauDeLettre);
+    return tableauDeLettre;
   }
+
+  envoieDuTableauDeLettreDejaCliquee(tableauDeLettre) {
+    this.messageService.messageSource.next(tableauDeLettre);
+  }
+
 
   modifierNombreEssai() {
     this.nbEssaiMax--;
+    this.envoieDuNombreEssai();
+  }
+
+  reinitialiserNbEssai() {
+    this.nbEssaiMax = 8;
+    this.envoieDuNombreEssai();
+  }
+  envoieDuNombreEssai() {
+    this.messageService.communicationNbEssai(this.nbEssaiMax);
   }
 
 }

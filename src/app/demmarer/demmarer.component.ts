@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {MessageService} from '../services/message.service';
 import {RedemarrerService} from '../services/redemarrerService';
 
 @Component({
@@ -11,14 +10,14 @@ export class DemmarerComponent implements OnInit {
 
   texte: string;
 
-  constructor(private redemarrerService: RedemarrerService) { }
+  constructor(private RedemarrerService: RedemarrerService) { }
 
   ngOnInit() {
     this.texte = 'Lancer une nouvelle partie' ;
   }
 
   demmarer() {
-    this.redemarrerService.redemarrerMessage('redemarrer');
+    this.RedemarrerService.redemarrerMessage('redemarrer');
   }
 
 }

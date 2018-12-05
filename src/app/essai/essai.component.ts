@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {motService} from '../services/mot.service';
+import {MotService} from '../services/mot.service';
+import {MessageService} from '../services/message.service';
 
 @Component({
   selector: 'app-essai',
@@ -10,7 +11,11 @@ export class EssaiComponent implements OnInit {
 
   nbEssai: number;
 
-  constructor(private motService: motService) { }
+  constructor(private motService: MotService, private messageService: MessageService) {
+    this.messageService.nbEssai.subscribe((nbRecu) => {
+      this.nbEssai = nbRecu;
+    });
+  }
 
   ngOnInit() {
     this.nbEssai = this.motService.nbEssaiMax;
