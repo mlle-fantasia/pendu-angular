@@ -1,7 +1,7 @@
 <p>
-  {{ mot }}
-</p>
-<p>
   {{ motCache }}
 </p>
+<button *ngIf="partieFinie">
+  <a href="https://fr.thefreedictionary.com/{{ mot }}" target="_blank">Definition de {{ mot }}</a>
+</button>
 
