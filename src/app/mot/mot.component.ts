@@ -3,6 +3,8 @@ import { MotService } from '../services/mot.service';
 import {Subscription} from 'rxjs';
 import {MessageService} from '../services/message.service';
 import {RedemarrerService} from '../services/redemarrerService';
+import {DictionnaireService} from '../services/DictionnaireService';
+
 
 @Component({
   selector: 'app-mot',
@@ -11,15 +13,15 @@ import {RedemarrerService} from '../services/redemarrerService';
 })
 export class MotComponent implements OnInit, OnDestroy {
 
-  DICTIONNAIRE = ['anticonstitutionnelement', 'bonjour', 'cannes', 'Dormir', 'Effacer', 'Front', 'Grossir', 'Hache', 'Ivoir', 'Jardinier', 'Kayak', 'Lignage', 'Maman', 'Naviguer', 'Oppération', 'Pouvoir', 'Questions', 'Route', 'Scintillement', 'Tortues', 'Unité', 'Vivre', 'Waaaaaaouuu', 'Xd', 'Yaourt', 'Zincographie'];
   tabLettreDejaCliquees = [];
+  @Input() partieCommencee: boolean;
   @Input() partieFinie: boolean;
-  @Input() mot: any;
+  @Input() mot;
   @Input() motCache: any;
   subscription: Subscription;
 
 
-  constructor(private messageService: MessageService, private motService: MotService, private redemarrerService: RedemarrerService) {
+  constructor(private messageService: MessageService, private motService: MotService, private redemarrerService: RedemarrerService, private dicoService: DictionnaireService) {
     // subscribe to home component messages
     this.subscription = this.messageService.getMessage().subscribe(message => {
       const reponse = JSON.parse(message.text);
@@ -36,14 +38,24 @@ export class MotComponent implements OnInit, OnDestroy {
     this.nouvellePartie();
   }
 
-  nouvellePartie() {
+  async nouvellePartie() {
     this.tabLettreDejaCliquees = [];
-    this.mot = this.motService.selectionMot(this.DICTIONNAIRE);
-    this.motCache = this.motService.rendreLeMot(this.mot, this.tabLettreDejaCliquees);
-    this.partieFinie = false ;
-    this.messageService.communicationFinDePartie(this.partieFinie);
-    this.motService.envoieDuTableauDeLettreDejaCliquee(this.tabLettreDejaCliquees);
-    this.motService.reinitialiserNbEssai();
+
+    await this.dicoService.Dictionnaire().then(
+      response => {
+        return new Promise( async resolve =>{
+          this.mot = await this.motService.selectionMot();
+          this.motCache = await this.motService.rendreLeMot(this.mot, this.tabLettreDejaCliquees);
+          this.partieFinie = false ;
+          this.messageService.communicationFinDePartie(this.partieFinie);
+          this.motService.envoieDuTableauDeLettreDejaCliquee(this.tabLettreDejaCliquees);
+          this.motService.reinitialiserNbEssai();
+
+        })}),
+      err => console.error(err),
+      () => console.log('done loading mot');
+
+
   }
 
   // Doit récupérer un event générer par le component  lettreComponent lors du click sur le bouton.

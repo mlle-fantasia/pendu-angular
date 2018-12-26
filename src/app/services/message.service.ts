@@ -14,11 +14,16 @@ export class MessageService {
   messageSource: BehaviorSubject<string> = new BehaviorSubject('');
   partieFinieOuiOuNon = new BehaviorSubject(false);
   nbEssai = new BehaviorSubject(0);
+  partiCommenceeOuiNon = new BehaviorSubject(false);
 
   constructor() { }
 
   communicationFinDePartie(partieFinie) {
     this.partieFinieOuiOuNon.next(partieFinie);
+  }
+
+  communicationDeputDePartie(partieCommencee) {
+     this.partiCommenceeOuiNon.next(partieCommencee);
   }
 
   communicationNbEssai(nb) {

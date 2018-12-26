@@ -1,21 +1,84 @@
-import { Injectable } from '@angular/core';
+import {
+  Injectable,
+  Input,
+  OnInit
+} from '@angular/core';
 import {MessageService} from './message.service';
+import {
+  HttpClient,
+  HttpResponse
+} from '@angular/common/http';
+import {Observable} from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root',
 })
-
 export class MotService {
 
-  nbEssaiMax = 8 ;
+  nbEssaiMax = 8;
+  // DICTIONNAIRE = ['anticonstitutionnelement', 'bonjour', 'cannes', 'Dormir', 'Effacer', 'Front', 'Grossir', 'Hache', 'Ivoir', 'Jardinier', 'Kayak', 'Lignage', 'Maman', 'Naviguer', 'Oppération', 'Pouvoir', 'Questions', 'Route', 'Scintillement', 'Tortues', 'Unité', 'Vivre', 'Waaaaaaouuu', 'Xd', 'Yaourt', 'Zincographie'];
+  DICTIONNAIRE ;
+  partieCommencee = false;
+  mot ;
 
-  constructor(private messageService: MessageService) {}
+  constructor(private messageService: MessageService, private httpClient: HttpClient) {
 
-  selectionMot(dico) {
-    let mot =  dico[Math.floor(dico.length * Math.random())];
-    mot = this.formatMot(mot);
-    console.log(mot);
-    return mot;
+  }
+
+
+
+  /*
+
+    getDictionnaire() {
+      // const dictionnaire = [];
+      return this.httpClient
+        .get('http://localhost/data/DEM-test.json');
+      // .subscribe(
+      //   (reponse) => {
+      //     console.log(reponse);
+      //     reponse.json().then(data => {
+      //         data.forEach(function (ligne) {
+      //           dictionnaire.push(ligne.M.mot);
+      //         });
+      //         this.DICTIONNAIRE = dictionnaire;
+      //       },
+      //       (error) => {
+      //         console.log('Erreur ! : ' + error);
+      //       }
+      //     );
+      //   });
+    }*/
+
+  async Dictionnaire() {
+    await this.httpClient.get('http://localhost/data/dico.json').subscribe(
+  (reponse) => {
+    return new Promise( resolve =>{
+        this.messageService.communicationDeputDePartie(this.partieCommencee);
+        this.DICTIONNAIRE = reponse;
+        console.log(this.DICTIONNAIRE);
+        this.partieCommencee = true;
+        this.messageService.communicationDeputDePartie(this.partieCommencee);
+        console.log(this.partieCommencee);
+        let mottmp = this.selectionMot();
+        return this.mot = mottmp.__zone_symbol__value;
+    })},
+      err => console.error(err),
+      () => console.log('done loading mot')
+    );
+  }
+
+
+  async selectionMot() {
+    console.log(this.DICTIONNAIRE);
+    if (this.DICTIONNAIRE.length > 0) {
+      let mot = this.DICTIONNAIRE[Math.floor(this.DICTIONNAIRE.length * Math.random())];
+      mot = this.formatMot(mot);
+      console.log(mot);
+      return mot;
+    } else {
+      console.log('je ne suis pas pret');
+    }
   }
 
   formatMot(mot) {
@@ -29,7 +92,8 @@ export class MotService {
     const accentsOut = ['A', 'A', 'A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a', 'a', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'o', 'o', 'o', 'o', 'o', 'o', 'E', 'E', 'E', 'E', 'e', 'e', 'e', 'e', 'e', 'C', 'c', 'D', 'I', 'I', 'I', 'I', 'i', 'i', 'i', 'i', 'U', 'U', 'U', 'U', 'u', 'u', 'u', 'u', 'N', 'n', 'S', 's', 'Y', 'y', 'y', 'Z', 'z'];
     str = str.split('');
     const strLen = str.length;
-    let i, x;
+    let i,
+      x;
     for (i = 0; i < strLen; i++) {
       x = accents.indexOf(str[i]);
       if (x !== -1) {
@@ -41,8 +105,9 @@ export class MotService {
 
   rendreLeMot(mot, tableauDeLettre) {
     let motCache = '';
+    console.log(mot);
     for (const lettre of mot) {
-    motCache = motCache.concat('', tableauDeLettre.includes(lettre) ? lettre : ' __ ');
+      motCache = motCache.concat('', tableauDeLettre.includes(lettre) ? lettre : ' __ ');
     }
     console.log(tableauDeLettre);
     console.log(motCache);
@@ -70,8 +135,29 @@ export class MotService {
     this.nbEssaiMax = 8;
     this.envoieDuNombreEssai();
   }
+
   envoieDuNombreEssai() {
     this.messageService.communicationNbEssai(this.nbEssaiMax);
   }
+
+
+  // Prend en paramètres l'URL cible et la fonction callback appelée en cas de succès
+  ajaxGet(url, callback) {
+    const req = new XMLHttpRequest();
+    req.open('GET', url);
+    req.addEventListener('load', function () {
+      if (req.status >= 200 && req.status < 400) {
+        // Appelle la fonction callback en lui passant la réponse de la requête
+        callback(req.responseText);
+      } else {
+        console.error(req.status + ' ' + req.statusText + ' ' + url);
+      }
+    });
+    req.addEventListener('error', function () {
+      console.error('Erreur réseau avec l\'URL ' + url);
+    });
+    req.send(null);
+  }
+
 
 }

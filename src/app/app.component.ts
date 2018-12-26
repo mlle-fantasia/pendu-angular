@@ -9,11 +9,13 @@ export class AppComponent implements OnInit {
 
   title = 'Le jeu du pendu avec Angular 6';
   partieFinie: boolean;
+  partieCommence: boolean;
 
   constructor() {
   }
 
   ngOnInit() {
     this.partieFinie = false ;
+    this.partieCommence = false;
   }
 }
