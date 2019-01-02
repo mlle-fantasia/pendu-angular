@@ -1,5 +1,10 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { MotService } from '../services/mot.service';
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
+import {MotService} from '../services/mot.service';
 import {Subscription} from 'rxjs';
 import {MessageService} from '../services/message.service';
 import {RedemarrerService} from '../services/redemarrerService';
@@ -16,6 +21,7 @@ export class MotComponent implements OnInit, OnDestroy {
   tabLettreDejaCliquees = [];
   @Input() partieCommencee: boolean;
   @Input() partieFinie: boolean;
+  @Input() partieGagnee: boolean;
   @Input() mot;
   @Input() motCache: any;
   subscription: Subscription;
@@ -30,7 +36,7 @@ export class MotComponent implements OnInit, OnDestroy {
       this.finDePartieAffichageGagneOuPerdu();
     });
     this.subscription = this.redemarrerService.getDemarrerMessage().subscribe(message => {
-        this.nouvellePartie();
+      this.nouvellePartie();
     });
   }
 
@@ -41,20 +47,14 @@ export class MotComponent implements OnInit, OnDestroy {
   async nouvellePartie() {
     this.tabLettreDejaCliquees = [];
 
-    await this.dicoService.Dictionnaire().then(
-      response => {
-        return new Promise( async resolve =>{
-          this.mot = await this.motService.selectionMot();
-          this.motCache = await this.motService.rendreLeMot(this.mot, this.tabLettreDejaCliquees);
-          this.partieFinie = false ;
-          this.messageService.communicationFinDePartie(this.partieFinie);
-          this.motService.envoieDuTableauDeLettreDejaCliquee(this.tabLettreDejaCliquees);
-          this.motService.reinitialiserNbEssai();
+    await this.dicoService.Dictionnaire();
 
-        })}),
-      err => console.error(err),
-      () => console.log('done loading mot');
-
+    this.mot = await this.motService.selectionMot();
+    this.motCache = await this.motService.rendreLeMot(this.mot, this.tabLettreDejaCliquees);
+    this.partieFinie = false;
+    this.messageService.communicationFinDePartie(this.partieFinie);
+    this.motService.envoieDuTableauDeLettreDejaCliquee(this.tabLettreDejaCliquees);
+    this.motService.reinitialiserNbEssai();
 
   }
 
@@ -70,11 +70,13 @@ export class MotComponent implements OnInit, OnDestroy {
 
   finDePartieAffichageGagneOuPerdu() {
     if (this.motCache === this.mot) {
-      this.partieFinie = true ;
+      this.partieFinie = true;
+      this.partieGagnee = true;
       this.messageService.communicationFinDePartie(this.partieFinie);
       this.motCache = 'GAGNE !!!';
     } else if (this.motService.nbEssaiMax === 0) {
-      this.partieFinie = true ;
+      this.partieFinie = true;
+      this.partieGagnee = false;
       this.messageService.communicationFinDePartie(this.partieFinie);
       this.motCache = 'PERDU !!!';
     }

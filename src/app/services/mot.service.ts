@@ -1,67 +1,38 @@
-import {
-  Injectable,
-  Input,
-  OnInit
-} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {MessageService} from './message.service';
-import {
-  HttpClient,
-  HttpResponse
-} from '@angular/common/http';
-import {Observable} from 'rxjs';
-
+import { HttpClient } from '@angular/common/http';
+import {DictionnaireService} from './DictionnaireService';
 
 @Injectable({
   providedIn: 'root',
 })
+
 export class MotService {
 
   nbEssaiMax = 8;
-  // DICTIONNAIRE = ['anticonstitutionnelement', 'bonjour', 'cannes', 'Dormir', 'Effacer', 'Front', 'Grossir', 'Hache', 'Ivoir', 'Jardinier', 'Kayak', 'Lignage', 'Maman', 'Naviguer', 'Oppération', 'Pouvoir', 'Questions', 'Route', 'Scintillement', 'Tortues', 'Unité', 'Vivre', 'Waaaaaaouuu', 'Xd', 'Yaourt', 'Zincographie'];
   DICTIONNAIRE ;
   partieCommencee = false;
   mot ;
 
-  constructor(private messageService: MessageService, private httpClient: HttpClient) {
+  constructor(private messageService: MessageService, private httpClient: HttpClient, private dictionnaireService: DictionnaireService) {
 
   }
 
 
-
-  /*
-
-    getDictionnaire() {
-      // const dictionnaire = [];
-      return this.httpClient
-        .get('http://localhost/data/DEM-test.json');
-      // .subscribe(
-      //   (reponse) => {
-      //     console.log(reponse);
-      //     reponse.json().then(data => {
-      //         data.forEach(function (ligne) {
-      //           dictionnaire.push(ligne.M.mot);
-      //         });
-      //         this.DICTIONNAIRE = dictionnaire;
-      //       },
-      //       (error) => {
-      //         console.log('Erreur ! : ' + error);
-      //       }
-      //     );
-      //   });
-    }*/
-
   async Dictionnaire() {
+
     await this.httpClient.get('http://localhost/data/dico.json').subscribe(
   (reponse) => {
     return new Promise( resolve =>{
+
         this.messageService.communicationDeputDePartie(this.partieCommencee);
         this.DICTIONNAIRE = reponse;
-        console.log(this.DICTIONNAIRE);
         this.partieCommencee = true;
         this.messageService.communicationDeputDePartie(this.partieCommencee);
         console.log(this.partieCommencee);
         let mottmp = this.selectionMot();
-        return this.mot = mottmp.__zone_symbol__value;
+      console.log(mottmp);
+        return this.mot = mottmp;
     })},
       err => console.error(err),
       () => console.log('done loading mot')

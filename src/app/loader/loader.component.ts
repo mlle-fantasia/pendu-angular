@@ -5,6 +5,7 @@ import {
 } from '@angular/core';
 import {MotService} from '../services/mot.service';
 import {MessageService} from '../services/message.service';
+import {DictionnaireService} from '../services/DictionnaireService';
 
 @Component({
   selector: 'app-loader',
@@ -18,7 +19,7 @@ export class LoaderComponent implements OnInit {
   @Input() mot;
 
 
-  constructor(private motService: MotService, private messageService: MessageService) {
+  constructor(private motService: MotService, private messageService: MessageService, dicoService: DictionnaireService) {
     this.subsciptionPartieCommencee();
   }
 
