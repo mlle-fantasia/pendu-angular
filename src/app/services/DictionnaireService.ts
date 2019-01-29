@@ -18,11 +18,11 @@ export class DictionnaireService {
   constructor(private httpClient: HttpClient) { }
 
   async Dictionnaire() {
-      await this.httpClient.get('http://localhost/data/dico.json').subscribe(
+      await this.httpClient.get('/mon-dico').subscribe(
         (reponse) => {
-        return new Promise( resolve =>{
+        return new Promise( resolve => {
         this.DICTIONNAIRE = reponse;
-        console.log(this.DICTIONNAIRE);
+        console.log(reponse);
     })},
       err => console.error(err),
       () => console.log('done loading mot')

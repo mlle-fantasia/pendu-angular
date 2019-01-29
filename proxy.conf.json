@@ -1,0 +1,10 @@
+{
+  "/mon-dico": {
+    "target": "http://localhost:5001",
+    "secure": false,
+    "pathRewrite": {
+      "^/mon-dico": ""
+    },
+    "changeOrigin": true
+  }
+}

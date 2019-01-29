@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {MessageService} from './message.service';
 import { HttpClient } from '@angular/common/http';
-import {DictionnaireService} from './DictionnaireService';
 
 @Injectable({
   providedIn: 'root',
@@ -14,16 +13,16 @@ export class MotService {
   partieCommencee = false;
   mot ;
 
-  constructor(private messageService: MessageService, private httpClient: HttpClient, private dictionnaireService: DictionnaireService) {
+  constructor(private messageService: MessageService, private httpClient: HttpClient) {
 
   }
 
 
   async Dictionnaire() {
 
-    await this.httpClient.get('http://localhost/data/dico.json').subscribe(
+    await this.httpClient.get('/mon-dico').subscribe(
   (reponse) => {
-    return new Promise( resolve =>{
+    return new Promise( resolve => {
 
         this.messageService.communicationDeputDePartie(this.partieCommencee);
         this.DICTIONNAIRE = reponse;
