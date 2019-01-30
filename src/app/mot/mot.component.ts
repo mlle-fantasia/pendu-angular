@@ -1,9 +1,4 @@
-import {
-  Component,
-  Input,
-  OnDestroy,
-  OnInit
-} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {MotService} from '../services/mot.service';
 import {Subscription} from 'rxjs';
 import {MessageService} from '../services/message.service';
@@ -43,9 +38,6 @@ export class MotComponent implements OnInit, OnDestroy {
             }
         );
     });
-      // this.dicoService.getMotView().subscribe(mot => {
-      //     this.mot = mot['mot'];
-      // });
   }
 
       ngOnInit() {
@@ -58,7 +50,6 @@ export class MotComponent implements OnInit, OnDestroy {
     }
 
     async getMot() {
-        console.log(this.partieGagnee);
         return await this.dicoService.Dictionnaire();
     }
 
@@ -77,9 +68,7 @@ export class MotComponent implements OnInit, OnDestroy {
   // Doit récupérer un event générer par le component  lettreComponent lors du click sur le bouton.
   testerLaLettre() {
     const motCacheActuel = this.motCache;
-      console.log(this.mot);
     this.motCache = this.motService.rendreLeMot(this.mot, this.tabLettreDejaCliquees);
-      console.log(this.motCache);
     if (this.motCache === motCacheActuel) {
       this.motService.modifierNombreEssai();
     }

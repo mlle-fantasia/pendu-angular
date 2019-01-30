@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {MessageService} from './message.service';
-import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -9,47 +8,10 @@ import { HttpClient } from '@angular/common/http';
 export class MotService {
 
   nbEssaiMax = 8;
-  DICTIONNAIRE ;
-  partieCommencee = false;
   mot ;
 
-  constructor(private messageService: MessageService, private httpClient: HttpClient) {
+  constructor(private messageService: MessageService) {  }
 
-  }
-
-
-  async Dictionnaire() {
-
-    await this.httpClient.get('http://localhost:5001/').subscribe(
-  (reponse) => {
-    return new Promise( resolve => {
-
-        this.messageService.communicationDeputDePartie(this.partieCommencee);
-        this.DICTIONNAIRE = reponse;
-        this.partieCommencee = true;
-        this.messageService.communicationDeputDePartie(this.partieCommencee);
-        console.log(this.partieCommencee);
-        let mottmp = this.selectionMot();
-        console.log(mottmp);
-        return this.mot = mottmp;
-    })},
-      err => console.error(err),
-      () => console.log('done loading mot')
-    );
-  }
-
-
-  async selectionMot() {
-    console.log(this.DICTIONNAIRE);
-    if (this.DICTIONNAIRE.length > 0) {
-      let mot = this.DICTIONNAIRE[Math.floor(this.DICTIONNAIRE.length * Math.random())];
-      mot = this.formatMot(mot);
-      console.log(mot);
-      return mot;
-    } else {
-      console.log('je ne suis pas pret');
-    }
-  }
 
   formatMot(mot) {
     return this
@@ -78,14 +40,11 @@ export class MotService {
     for (const lettre of mot) {
       motCache = motCache.concat('', tableauDeLettre.includes(lettre) ? lettre : ' __ ');
     }
-    console.log(tableauDeLettre);
-    console.log(motCache);
     return motCache;
   }
 
   ajouterAuTabDeLettreDejaCliquees(lettre, tableauDeLettre) {
     tableauDeLettre.push(lettre);
-    console.log(tableauDeLettre);
     this.envoieDuTableauDeLettreDejaCliquee(tableauDeLettre);
     return tableauDeLettre;
   }
@@ -93,7 +52,6 @@ export class MotService {
   envoieDuTableauDeLettreDejaCliquee(tableauDeLettre) {
     this.messageService.messageSource.next(tableauDeLettre);
   }
-
 
   modifierNombreEssai() {
     this.nbEssaiMax--;
@@ -109,24 +67,6 @@ export class MotService {
     this.messageService.communicationNbEssai(this.nbEssaiMax);
   }
 
-
-  // Prend en paramètres l'URL cible et la fonction callback appelée en cas de succès
-  ajaxGet(url, callback) {
-    const req = new XMLHttpRequest();
-    req.open('GET', url);
-    req.addEventListener('load', function () {
-      if (req.status >= 200 && req.status < 400) {
-        // Appelle la fonction callback en lui passant la réponse de la requête
-        callback(req.responseText);
-      } else {
-        console.error(req.status + ' ' + req.statusText + ' ' + url);
-      }
-    });
-    req.addEventListener('error', function () {
-      console.error('Erreur réseau avec l\'URL ' + url);
-    });
-    req.send(null);
-  }
 
 
 }
