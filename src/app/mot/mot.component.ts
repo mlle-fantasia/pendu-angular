@@ -58,6 +58,7 @@ export class MotComponent implements OnInit, OnDestroy {
     }
 
     async getMot() {
+        console.log(this.partieGagnee);
         return await this.dicoService.Dictionnaire();
     }
 
@@ -66,6 +67,7 @@ export class MotComponent implements OnInit, OnDestroy {
     console.log(this.mot);
     this.motCache = this.motService.rendreLeMot(this.mot, this.tabLettreDejaCliquees);
     this.partieFinie = false;
+    this.partieGagnee = false;
     this.messageService.communicationFinDePartie(this.partieFinie);
     this.motService.envoieDuTableauDeLettreDejaCliquee(this.tabLettreDejaCliquees);
     this.motService.reinitialiserNbEssai();
