@@ -8,7 +8,7 @@ import { MotService } from './services/mot.service';
 import { EssaiComponent } from './essai/essai.component';
 import { DemmarerComponent } from './demmarer/demmarer.component';
 import {HttpClientModule} from '@angular/common/http';
-// import { LoaderComponent } from './loader/loader.component';
+
 
 
 @NgModule({
@@ -19,7 +19,6 @@ import {HttpClientModule} from '@angular/common/http';
     MotComponent,
     EssaiComponent,
     DemmarerComponent,
-    // LoaderComponent
   ],
   imports: [
     HttpClientModule,
