@@ -36,15 +36,20 @@ export class MotComponent implements OnInit, OnDestroy {
       this.finDePartieAffichageGagneOuPerdu();
     });
     this.subscription = this.redemarrerService.getDemarrerMessage().subscribe(message => {
-      this.nouvellePartie();
+        this.getMot().then(
+            (reponse) => {
+                this.mot = this.motService.formatMot(reponse.mot);
+                this.nouvellePartie();
+            }
+        );
     });
       // this.dicoService.getMotView().subscribe(mot => {
       //     this.mot = mot['mot'];
       // });
   }
 
-     async ngOnInit() {
-        await this.getMot().then(
+      ngOnInit() {
+         this.getMot().then(
             (reponse) => {
               this.mot = this.motService.formatMot(reponse.mot);
               this.nouvellePartie();
