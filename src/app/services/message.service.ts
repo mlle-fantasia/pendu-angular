@@ -15,8 +15,13 @@ export class MessageService {
   partieFinieOuiOuNon = new BehaviorSubject(false);
   nbEssai = new BehaviorSubject(0);
   partiCommenceeOuiNon = new BehaviorSubject(false);
+  Mot: BehaviorSubject<string> = new BehaviorSubject('');
 
   constructor() { }
+
+  communicationMot(leMot) {
+        this.Mot.next(leMot);
+  }
 
   communicationFinDePartie(partieFinie) {
     this.partieFinieOuiOuNon.next(partieFinie);

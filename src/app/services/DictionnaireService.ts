@@ -8,25 +8,23 @@ import {
   HttpClient,
   HttpResponse
 } from '@angular/common/http';
+import {MessageService} from './message.service';
 
 @Injectable({ providedIn: 'root' })
 
 export class DictionnaireService {
 
-  DICTIONNAIRE ;
+  private UrlDico = 'http://localhost:5001/';
+
 
   constructor(private httpClient: HttpClient) { }
 
-  async Dictionnaire() {
-      await this.httpClient.get('/mon-dico').subscribe(
-        (reponse) => {
-        return new Promise( resolve => {
-        this.DICTIONNAIRE = reponse;
-        console.log(reponse);
-    })},
-      err => console.error(err),
-      () => console.log('done loading mot')
-    );
-  }
+
+    async Dictionnaire(): Promise<object> {
+       const reponse = await this.httpClient.get(this.UrlDico).toPromise();
+       return reponse;
+    }
+
+
 
 }

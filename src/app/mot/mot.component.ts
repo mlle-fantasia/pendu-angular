@@ -38,19 +38,28 @@ export class MotComponent implements OnInit, OnDestroy {
     this.subscription = this.redemarrerService.getDemarrerMessage().subscribe(message => {
       this.nouvellePartie();
     });
+      // this.dicoService.getMotView().subscribe(mot => {
+      //     this.mot = mot['mot'];
+      // });
   }
 
-  ngOnInit() {
-    this.nouvellePartie();
-  }
+     async ngOnInit() {
+        await this.getMot().then(
+            (reponse) => {
+              this.mot = this.motService.formatMot(reponse.mot);
+              this.nouvellePartie();
+            }
+        );
+    }
 
-  async nouvellePartie() {
+    async getMot() {
+        return await this.dicoService.Dictionnaire();
+    }
+
+   nouvellePartie() {
     this.tabLettreDejaCliquees = [];
-
-    await this.dicoService.Dictionnaire();
-
-    this.mot = await this.motService.selectionMot();
-    this.motCache = await this.motService.rendreLeMot(this.mot, this.tabLettreDejaCliquees);
+    console.log(this.mot);
+    this.motCache = this.motService.rendreLeMot(this.mot, this.tabLettreDejaCliquees);
     this.partieFinie = false;
     this.messageService.communicationFinDePartie(this.partieFinie);
     this.motService.envoieDuTableauDeLettreDejaCliquee(this.tabLettreDejaCliquees);
@@ -61,8 +70,9 @@ export class MotComponent implements OnInit, OnDestroy {
   // Doit récupérer un event générer par le component  lettreComponent lors du click sur le bouton.
   testerLaLettre() {
     const motCacheActuel = this.motCache;
+      console.log(this.mot);
     this.motCache = this.motService.rendreLeMot(this.mot, this.tabLettreDejaCliquees);
-
+      console.log(this.motCache);
     if (this.motCache === motCacheActuel) {
       this.motService.modifierNombreEssai();
     }

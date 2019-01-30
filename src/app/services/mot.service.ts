@@ -20,7 +20,7 @@ export class MotService {
 
   async Dictionnaire() {
 
-    await this.httpClient.get('/mon-dico').subscribe(
+    await this.httpClient.get('http://localhost:5001/').subscribe(
   (reponse) => {
     return new Promise( resolve => {
 
@@ -30,7 +30,7 @@ export class MotService {
         this.messageService.communicationDeputDePartie(this.partieCommencee);
         console.log(this.partieCommencee);
         let mottmp = this.selectionMot();
-      console.log(mottmp);
+        console.log(mottmp);
         return this.mot = mottmp;
     })},
       err => console.error(err),
@@ -75,7 +75,6 @@ export class MotService {
 
   rendreLeMot(mot, tableauDeLettre) {
     let motCache = '';
-    console.log(mot);
     for (const lettre of mot) {
       motCache = motCache.concat('', tableauDeLettre.includes(lettre) ? lettre : ' __ ');
     }

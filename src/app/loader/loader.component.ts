@@ -19,13 +19,13 @@ export class LoaderComponent implements OnInit {
   @Input() mot;
 
 
-  constructor(private motService: MotService, private messageService: MessageService, dicoService: DictionnaireService) {
+  constructor(private motService: MotService, private messageService: MessageService, private dicoService: DictionnaireService) {
     this.subsciptionPartieCommencee();
   }
 
   async ngOnInit() {
-    this.mot = await this.motService.Dictionnaire();
-    console.log(this.mot);
+
+
   }
 
   subsciptionPartieCommencee(){
