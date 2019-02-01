@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 
 
 @Injectable({ providedIn: 'root' })
@@ -11,9 +11,8 @@ export class DictionnaireService {
   constructor(private httpClient: HttpClient) { }
 
 
-    async Dictionnaire(): Promise<object> {
-       const reponse = await this.httpClient.get(this.UrlDico).toPromise();
-       return reponse;
+     Dictionnaire(): Promise<object> {
+        return this.httpClient.get(this.UrlDico).toPromise();
     }
 
 
