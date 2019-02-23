@@ -19,7 +19,7 @@ RUN $(npm bin)/ng build --prod --build-optimizer
 
 # production environment
 FROM nginx:alpine as prod
-COPY ./nginx/default.conf /etc/nginx/conf.d/
+COPY ./ngnix/default.conf /etc/nginx/conf.d/
 
 ## Remove default nginx website
 RUN rm -rf /usr/share/nginx/html/*
