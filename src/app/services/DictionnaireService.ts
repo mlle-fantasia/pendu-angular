@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http';
 
 export class DictionnaireService {
 
-  private UrlDico = 'http://localhost:5001/';
+  private UrlDico = 'https://penduapi.exs3.com/';
 
   constructor(private httpClient: HttpClient) { }
 
