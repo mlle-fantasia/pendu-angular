@@ -37,9 +37,10 @@ export class MotService {
 
   rendreLeMot(mot, tableauDeLettre) {
     let motCache = '';
-    for (const lettre of mot) {
-      motCache = motCache.concat('', tableauDeLettre.includes(lettre) ? lettre : ' __ ');
-    }
+    motCache =  mot.replace(/\w/g,
+          (letter) => (tableauDeLettre.includes(letter) ? letter : ' __ ')
+      );
+
     return motCache;
   }
 
