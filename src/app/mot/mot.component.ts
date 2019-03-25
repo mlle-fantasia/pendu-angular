@@ -33,8 +33,7 @@ export class MotComponent implements OnInit, OnDestroy {
     this.subscription = this.redemarrerService.getDemarrerMessage().subscribe(message => {
         this.getMot().then(
             (reponse) => {
-                const objetMot = this.motService.formatMot(reponse);
-                this.mot = objetMot.mot;
+                this.mot = this.motService.formatMot(reponse.mot);
                 this.nouvellePartie();
             }, (raison) => {
                 console.error('erreur' + raison);
@@ -46,8 +45,8 @@ export class MotComponent implements OnInit, OnDestroy {
       ngOnInit() {
          this.getMot().then(
             (reponse) => {
-              const objetMot = this.motService.formatMot(reponse);
-              this.mot = objetMot.mot;
+              const MOT = this.motService.formatMot(reponse.mot);
+              this.mot = MOT;
               this.nouvellePartie();
             }
         ).catch(raison => {console.error('erreur : ' + raison);
