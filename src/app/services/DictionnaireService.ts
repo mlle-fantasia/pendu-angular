@@ -10,11 +10,8 @@ export class DictionnaireService {
 
   constructor(private httpClient: HttpClient) { }
 
-
      Dictionnaire(): Promise<object> {
-        return this.httpClient.get(this.UrlDico).toPromise();
-    }
-
-
+         return this.httpClient.get(this.UrlDico).toPromise();
+     }
 
 }

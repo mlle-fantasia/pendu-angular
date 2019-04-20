@@ -30,27 +30,18 @@ export class MotComponent implements OnInit, OnDestroy {
       this.testerLaLettre();
       this.finDePartieAffichageGagneOuPerdu();
     });
-    this.subscription = this.redemarrerService.getDemarrerMessage().subscribe(message => {
-        this.getMot().then(
-            (reponse) => {
-                this.mot = this.motService.formatMot(reponse.mot);
-                this.nouvellePartie();
-            }, (raison) => {
-                console.error('erreur' + raison);
-            }
-        );
+    this.subscription = this.redemarrerService.getDemarrerMessage().subscribe( async message => {
+            const reponse: any = await this.getMot();
+            this.mot = this.motService.formatMot(reponse.mot);
+            this.nouvellePartie();
     });
   }
 
-      ngOnInit() {
-         this.getMot().then(
-            (reponse) => {
-              const MOT = this.motService.formatMot(reponse.mot);
-              this.mot = MOT;
-              this.nouvellePartie();
-            }
-        ).catch(raison => {console.error('erreur : ' + raison);
-        });
+      async ngOnInit() {
+          const data: any = await this.getMot();
+          const MOT = this.motService.formatMot(data.mot);
+          this.mot = MOT;
+          this.nouvellePartie();
     }
 
     async getMot() {
