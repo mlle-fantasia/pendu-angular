@@ -50,7 +50,7 @@ export class MotComponent implements OnInit, OnDestroy {
 
    nouvellePartie() {
     this.tabLettreDejaCliquees = [];
-    console.log(this.mot);
+    //console.log(this.mot);
     this.motCache = this.motService.rendreLeMot(this.mot, this.tabLettreDejaCliquees);
     this.partieFinie = false;
     this.partieGagnee = false;
